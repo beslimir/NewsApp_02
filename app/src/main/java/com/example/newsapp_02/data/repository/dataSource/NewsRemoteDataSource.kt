@@ -5,6 +5,6 @@ import retrofit2.Response
 
 interface NewsRemoteDataSource {
 
-    suspend fun getLatestNews(): Response<APIResponse>
+    suspend fun getLatestNews(country: String, page: Int): Response<APIResponse>
 
 }

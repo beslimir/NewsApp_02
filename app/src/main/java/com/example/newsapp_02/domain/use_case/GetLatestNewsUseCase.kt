@@ -6,8 +6,8 @@ import com.example.newsapp_02.domain.repository.NewsRepository
 
 class GetLatestNewsUseCase(private val newsRepository: NewsRepository) {
 
-    suspend fun execute(): Resource<APIResponse> {
-        return newsRepository.getLatestNews()
+    suspend fun execute(country: String, page: Int): Resource<APIResponse> {
+        return newsRepository.getLatestNews(country, page)
     }
 
 }

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface NewsRepository {
 
     //api communication
-    suspend fun getLatestNews(): Resource<APIResponse>
+    suspend fun getLatestNews(country: String, page: Int): Resource<APIResponse>
     suspend fun getSearchedNews(searchQuery: String): Resource<APIResponse>
 
     //local database
