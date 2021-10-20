@@ -6,7 +6,6 @@ import com.example.newsapp_02.data.repository.dataSourceImpl.NewsRemoteDataSourc
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
