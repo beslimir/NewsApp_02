@@ -36,13 +36,14 @@ class NewsFragment : Fragment() {
 
         fragmentNewsBinding = FragmentNewsBinding.bind(view)
         viewModel = (activity as MainActivity).viewModel
+        newsAdapter = (activity as MainActivity).newsAdapter
 
         initRecyclerView()
         viewNewsList()
     }
 
     private fun initRecyclerView() {
-        newsAdapter = NewsAdapter()
+//        newsAdapter = NewsAdapter()
         fragmentNewsBinding.rvNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
@@ -57,7 +58,11 @@ class NewsFragment : Fragment() {
                     hideProgressBar()
                     response.data?.let { apiResponse ->
                         if (apiResponse.totalResults == 0) {
-                            Toast.makeText(activity,"Currently, there are no results available :(",Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                activity,
+                                "Currently, there are no results available :(",
+                                Toast.LENGTH_LONG
+                            ).show()
                         } else {
                             newsAdapter.differ.submitList(apiResponse.results)
                         }
