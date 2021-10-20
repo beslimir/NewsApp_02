@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsapp_02.data.model.APIResponse
 import com.example.newsapp_02.data.util.Resource
 import com.example.newsapp_02.domain.use_case.GetLatestNewsUseCase
+import com.example.newsapp_02.presentation.NewsApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -19,14 +20,14 @@ import java.lang.Exception
 class NewsViewModel(
     val app: Application,
     val getLatestNewsUseCase: GetLatestNewsUseCase
-): AndroidViewModel(app) {
+) : AndroidViewModel(app) {
 
     val latestNews: MutableLiveData<Resource<APIResponse>> = MutableLiveData()
 
     fun getLatestNews(country: String, page: Int) = viewModelScope.launch(Dispatchers.IO) {
         latestNews.postValue(Resource.Loading())
         try {
-            if (isNetworkAvailable(app)) {
+            if (hasInternetConnection()) {
                 val apiResult = getLatestNewsUseCase.execute(country, page)
                 latestNews.postValue(apiResult)
             } else {
@@ -37,25 +38,27 @@ class NewsViewModel(
         }
     }
 
-    private fun isNetworkAvailable(context: Context?): Boolean {
-        if (context == null)
-            return false
-
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-
-            if (capabilities != null) {
-                when {
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
-                        return true
-                    }
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                        return true
-                    }
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
-                        return true
-                    }
+    private fun hasInternetConnection(): Boolean {
+        val connectivityManager = getApplication<NewsApp>().getSystemService(
+            Context.CONNECTIVITY_SERVICE
+        ) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val activeNetwork = connectivityManager.activeNetwork ?: return false
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+            return when {
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                else -> false
+            }
+        } else {
+            connectivityManager.activeNetworkInfo?.run {
+                when (type) {
+                    ConnectivityManager.TYPE_WIFI -> true
+                    ConnectivityManager.TYPE_MOBILE -> true
+                    ConnectivityManager.TYPE_ETHERNET -> true
+                    else -> false
                 }
             }
         }
