@@ -18,4 +18,14 @@ interface NewsAPIService {
         apiKey: String = BuildConfig.API_KEY
     ): Response<APIResponse>
 
+    @GET("api/1/news")
+    suspend fun getSearchNews(
+        @Query("country")
+        country: String,
+        @Query("q")
+        query: String,
+        @Query("apiKey")
+        apiKey: String = BuildConfig.API_KEY
+    ): Response<APIResponse>
+
 }

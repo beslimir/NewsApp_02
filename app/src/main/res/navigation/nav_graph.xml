@@ -24,6 +24,16 @@
             app:destination="@id/infoFragment" />
     </fragment>
     <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.newsapp_02.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
+
+    <fragment
         android:id="@+id/infoFragment"
         android:name="com.example.newsapp_02.InfoFragment"
         android:label="fragment_info"
