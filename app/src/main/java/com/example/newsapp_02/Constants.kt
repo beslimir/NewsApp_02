@@ -5,7 +5,8 @@ class Constants {
     companion object {
         val API_KEY = "xxx"
         val COUNTRY = "de"
-        val PAGE_NUM = 1
+        val LOG_TAG = "beslimir"
+        val ARTICLES_PER_PAGE = 10
     }
 
 }
