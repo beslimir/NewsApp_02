@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp_02.Constants.Companion.COUNTRY
 import com.example.newsapp_02.Constants.Companion.DELAY_TIME
@@ -44,6 +45,16 @@ class SearchFragment : Fragment() {
 
         initRecyclerView()
         getSearchNewsList()
+
+        newsAdapter.setOnItemClickListener { article ->
+            val bundle = Bundle().apply {
+                putSerializable("article", article)
+            }
+            findNavController().navigate(
+                R.id.action_searchFragment_to_infoFragment,
+                bundle
+            )
+        }
     }
 
     private fun initRecyclerView() {

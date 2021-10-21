@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.newsapp_02.R
 import com.example.newsapp_02.data.model.Article
 import com.example.newsapp_02.databinding.NewsListItemBinding
 
@@ -26,6 +25,13 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
     override fun getItemCount() = differ.currentList.size
 
 
+    private var onItemClickListener: ((Article) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Article) -> Unit) {
+        onItemClickListener = listener
+    }
+
+
     private val differCallback = object : DiffUtil.ItemCallback<Article>() {
 
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -41,8 +47,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
 
     //constructor parameter because of viewBinding
-    inner class NewsViewHolder(val binding: NewsListItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class NewsViewHolder(val binding: NewsListItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article) {
             binding.tvTitle.text = article.title
             binding.tvDescription.text = article.content.toString()
@@ -51,6 +56,12 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
             Glide.with(binding.ivArticleImage.context)
                 .load(article.image_url)
                 .into(binding.ivArticleImage)
+
+            binding.root.setOnClickListener {
+                onItemClickListener?.let {
+                    it(article)
+                }
+            }
         }
     }
 }

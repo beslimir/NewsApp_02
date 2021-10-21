@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp_02.Constants.Companion.ARTICLES_PER_PAGE
@@ -50,6 +51,16 @@ class NewsFragment : Fragment() {
 
         initRecyclerView()
         viewNewsList()
+
+        newsAdapter.setOnItemClickListener { article ->
+            val bundle = Bundle().apply {
+                putSerializable("article", article)
+            }
+            findNavController().navigate(
+                R.id.action_newsFragment_to_infoFragment,
+                bundle
+            )
+        }
     }
 
     private fun initRecyclerView() {
