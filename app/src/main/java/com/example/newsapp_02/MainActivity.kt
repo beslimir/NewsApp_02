@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.newsapp_02.databinding.ActivityMainBinding
 import com.example.newsapp_02.presentation.adapter.NewsAdapter
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 //        binding.bottomNavigationMenu.setupWithNavController(binding.navHostFragment.findNavController())
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
+        NavigationUI.setupWithNavController(binding.bottomNavigationMenu, navController)
 
         viewModel = ViewModelProvider(this, factory).get(NewsViewModel::class.java)
     }

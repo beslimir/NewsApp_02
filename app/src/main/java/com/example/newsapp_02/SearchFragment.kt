@@ -62,6 +62,8 @@ class SearchFragment : Fragment() {
                 fragmentSearchBinding.etSearch.let {
                     if (fragmentSearchBinding.etSearch.text.toString().isNotEmpty()) {
                         newsViewModel.getSearchNews(COUNTRY, fragmentSearchBinding.etSearch.text.toString())
+                    } else {
+                        //TODO: here we can implement to show some initial list of news (maybe from news fragment...)
                     }
                 }
             }
