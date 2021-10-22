@@ -1,6 +1,6 @@
 This app is built on a MVVM architecture (with domain layer).
 The domain layer is very useful in bigger projects, but for demonstration purposes, I used it in my NewsApp.
-The NewsApp_02 is a bit different than the first one. I used also dagger hilt and the domain layer.
+The NewsApp_02 is a bit different than the first one. I used also dagger hilt for dependency injection.
 
 It uses:
 
