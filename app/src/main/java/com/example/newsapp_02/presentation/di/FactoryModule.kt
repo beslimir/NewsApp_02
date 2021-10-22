@@ -1,11 +1,7 @@
 package com.example.newsapp_02.presentation.di
 
 import android.app.Application
-import com.example.newsapp_02.domain.use_case.GetLatestNewsUseCase
-import com.example.newsapp_02.domain.use_case.GetSavedNewsUseCase
-import com.example.newsapp_02.domain.use_case.GetSearchedNewsUseCase
-import com.example.newsapp_02.domain.use_case.SaveNewsUseCase
-import com.example.newsapp_02.presentation.view_model.NewsViewModel
+import com.example.newsapp_02.domain.use_case.*
 import com.example.newsapp_02.presentation.view_model.NewsViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -24,9 +20,17 @@ class FactoryModule {
         getLatestNewsUseCase: GetLatestNewsUseCase,
         getSearchedNewsUseCase: GetSearchedNewsUseCase,
         saveNewsUseCase: SaveNewsUseCase,
-        getSavedNewsUseCase: GetSavedNewsUseCase
+        getSavedNewsUseCase: GetSavedNewsUseCase,
+        deleteSavedNewsUseCase: DeleteSavedNewsUseCase
     ): NewsViewModelFactory {
-        return NewsViewModelFactory(application, getLatestNewsUseCase, getSearchedNewsUseCase, saveNewsUseCase, getSavedNewsUseCase)
+        return NewsViewModelFactory(
+            application,
+            getLatestNewsUseCase,
+            getSearchedNewsUseCase,
+            saveNewsUseCase,
+            getSavedNewsUseCase,
+            deleteSavedNewsUseCase
+        )
     }
 
 }

@@ -6,6 +6,7 @@ import com.example.newsapp_02.data.repository.dataSource.NewsLocalDataSource
 import com.example.newsapp_02.data.repository.dataSource.NewsRemoteDataSource
 import com.example.newsapp_02.data.util.Resource
 import com.example.newsapp_02.domain.repository.NewsRepository
+import com.example.newsapp_02.domain.use_case.DeleteSavedNewsUseCase
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
@@ -37,7 +38,7 @@ class NewsRepositoryImpl(
     }
 
     override suspend fun deleteNews(article: Article) {
-        TODO("Not yet implemented")
+        newsLocalDataSource.deleteNews(article)
     }
 
     override fun getSavedNews(): Flow<List<Article>> {

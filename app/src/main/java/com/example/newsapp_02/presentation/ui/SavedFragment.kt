@@ -12,6 +12,7 @@ import com.example.newsapp_02.R
 import com.example.newsapp_02.databinding.FragmentSavedBinding
 import com.example.newsapp_02.presentation.adapter.NewsAdapter
 import com.example.newsapp_02.presentation.view_model.NewsViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class SavedFragment : Fragment() {
 
@@ -48,6 +49,15 @@ class SavedFragment : Fragment() {
                 R.id.action_savedFragment_to_infoFragment,
                 bundle
             )
+        }
+        newsAdapter.setOnItemLongClickListener { myArticle ->
+            newsViewModel.deleteNews(myArticle)
+            Snackbar.make(view, "Article successfully deleted.", Snackbar.LENGTH_SHORT).apply {
+                setAction("Undo") {
+                    newsViewModel.saveNews(myArticle)
+                }
+                show()
+            }
         }
 
     }

@@ -1,9 +1,6 @@
 package com.example.newsapp_02.data.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.newsapp_02.data.model.Article
 import kotlinx.coroutines.flow.Flow
 
@@ -15,5 +12,8 @@ interface ArticleDao {
 
     @Query("SELECT * from Article")
     fun getSavedNews(): Flow<List<Article>>
+
+    @Delete
+    suspend fun delete(article: Article)
 
 }

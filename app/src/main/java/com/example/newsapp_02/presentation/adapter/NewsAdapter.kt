@@ -26,9 +26,14 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
 
     private var onItemClickListener: ((Article) -> Unit)? = null
+    private var onItemLongClickListener: ((Article) -> Unit)? = null
 
     fun setOnItemClickListener(listener: (Article) -> Unit) {
         onItemClickListener = listener
+    }
+
+    fun setOnItemLongClickListener(listener: (Article) -> Unit) {
+        onItemLongClickListener = listener
     }
 
 
@@ -61,6 +66,12 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
                 onItemClickListener?.let {
                     it(article)
                 }
+            }
+            binding.root.setOnLongClickListener {
+                onItemLongClickListener?.let {
+                    it(article)
+                }
+                true
             }
         }
     }
