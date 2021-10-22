@@ -14,6 +14,18 @@ class UseCaseModule {
 
     @Singleton
     @Provides
+    fun provideWrapperUseCases(
+        deleteNews: DeleteSavedNewsUseCase,
+        getLatestNews: GetLatestNewsUseCase,
+        getSavedNews: GetSavedNewsUseCase,
+        getSearchedNews: GetSearchedNewsUseCase,
+        saveNews: SaveNewsUseCase
+    ): UseCasesWrapper {
+        return UseCasesWrapper(deleteNews, getLatestNews, getSavedNews, getSearchedNews, saveNews)
+    }
+
+    @Singleton
+    @Provides
     fun provideLatestNewsUseCase(newsRepository: NewsRepository): GetLatestNewsUseCase {
         return GetLatestNewsUseCase(newsRepository)
     }

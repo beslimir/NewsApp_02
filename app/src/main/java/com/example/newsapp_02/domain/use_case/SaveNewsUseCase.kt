@@ -5,6 +5,6 @@ import com.example.newsapp_02.domain.repository.NewsRepository
 
 class SaveNewsUseCase(private val newsRepository: NewsRepository) {
 
-    suspend fun execute(article: Article) = newsRepository.saveNews(article)
+    suspend operator fun invoke(article: Article) = newsRepository.saveNews(article)
 
 }

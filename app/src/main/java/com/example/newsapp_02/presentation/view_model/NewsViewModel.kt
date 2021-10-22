@@ -5,25 +5,22 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import com.example.newsapp_02.data.model.APIResponse
 import com.example.newsapp_02.data.model.Article
 import com.example.newsapp_02.data.util.Resource
-import com.example.newsapp_02.domain.use_case.*
+import com.example.newsapp_02.domain.use_case.UseCasesWrapper
 import com.example.newsapp_02.presentation.NewsApp
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class NewsViewModel(
     val app: Application,
-    private val getLatestNewsUseCase: GetLatestNewsUseCase,
-    private val getSearchedNewsUseCase: GetSearchedNewsUseCase,
-    private val saveNewsUseCase: SaveNewsUseCase,
-    private val getSavedNewsUseCase: GetSavedNewsUseCase,
-    private val deleteSavedNewsUseCase: DeleteSavedNewsUseCase
+    private val useCasesWrapper: UseCasesWrapper
 ) : AndroidViewModel(app) {
 
     val latestNews: MutableLiveData<Resource<APIResponse>> = MutableLiveData()
@@ -33,7 +30,7 @@ class NewsViewModel(
         latestNews.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val apiResult = getLatestNewsUseCase.execute(country, page)
+                val apiResult = useCasesWrapper.getLatestNews(country, page)
                 latestNews.postValue(apiResult)
             } else {
                 latestNews.postValue(Resource.Error("Internet is not available!"))
@@ -47,7 +44,7 @@ class NewsViewModel(
         searchNews.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val apiResult = getSearchedNewsUseCase.execute(country, query)
+                val apiResult = useCasesWrapper.getSearchedNews(country, query)
                 searchNews.postValue(apiResult)
             } else {
                 searchNews.postValue(Resource.Error("No internet connection!"))
@@ -58,17 +55,17 @@ class NewsViewModel(
     }
 
     fun saveNews(article: Article) = viewModelScope.launch {
-        saveNewsUseCase.execute(article)
+        useCasesWrapper.saveNews(article)
     }
 
     fun getSavedNews() = liveData {
-        getSavedNewsUseCase.execute().collect { articlesList ->
+        useCasesWrapper.getSavedNews.execute().collect { articlesList ->
             emit(articlesList)
         }
     }
 
     fun deleteNews(article: Article) = viewModelScope.launch {
-        deleteSavedNewsUseCase.execute(article)
+        useCasesWrapper.deleteNews(article)
     }
 
 
