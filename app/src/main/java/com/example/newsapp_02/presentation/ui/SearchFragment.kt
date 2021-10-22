@@ -1,4 +1,4 @@
-package com.example.newsapp_02
+package com.example.newsapp_02.presentation.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -7,12 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.newsapp_02.Constants
 import com.example.newsapp_02.Constants.Companion.COUNTRY
 import com.example.newsapp_02.Constants.Companion.DELAY_TIME
+import com.example.newsapp_02.R
 import com.example.newsapp_02.data.util.Resource
 import com.example.newsapp_02.databinding.FragmentSearchBinding
 import com.example.newsapp_02.presentation.adapter.NewsAdapter

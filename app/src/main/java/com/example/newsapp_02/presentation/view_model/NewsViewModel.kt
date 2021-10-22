@@ -10,9 +10,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp_02.data.model.APIResponse
+import com.example.newsapp_02.data.model.Article
 import com.example.newsapp_02.data.util.Resource
 import com.example.newsapp_02.domain.use_case.GetLatestNewsUseCase
 import com.example.newsapp_02.domain.use_case.GetSearchedNewsUseCase
+import com.example.newsapp_02.domain.use_case.SaveNewsUseCase
 import com.example.newsapp_02.presentation.NewsApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,8 +22,9 @@ import java.lang.Exception
 
 class NewsViewModel(
     val app: Application,
-    val getLatestNewsUseCase: GetLatestNewsUseCase,
-    val getSearchedNewsUseCase: GetSearchedNewsUseCase
+    private val getLatestNewsUseCase: GetLatestNewsUseCase,
+    private val getSearchedNewsUseCase: GetSearchedNewsUseCase,
+    private val saveNewsUseCase: SaveNewsUseCase
 ) : AndroidViewModel(app) {
 
     val latestNews: MutableLiveData<Resource<APIResponse>> = MutableLiveData()
@@ -54,6 +57,11 @@ class NewsViewModel(
             searchNews.postValue(Resource.Error(e.message.toString()))
         }
     }
+
+    fun saveNews(article: Article) = viewModelScope.launch {
+        saveNewsUseCase.execute(article)
+    }
+
 
     private fun hasInternetConnection(): Boolean {
         val connectivityManager = getApplication<NewsApp>().getSystemService(

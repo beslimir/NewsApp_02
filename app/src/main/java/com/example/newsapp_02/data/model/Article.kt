@@ -1,8 +1,13 @@
 package com.example.newsapp_02.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
+@Entity
 data class Article(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = null,
     val content: Any?,
     val creator: Any?,
     val description: String?,

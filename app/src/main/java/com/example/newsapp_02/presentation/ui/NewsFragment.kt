@@ -1,4 +1,4 @@
-package com.example.newsapp_02
+package com.example.newsapp_02.presentation.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp_02.Constants.Companion.ARTICLES_PER_PAGE
 import com.example.newsapp_02.Constants.Companion.COUNTRY
 import com.example.newsapp_02.Constants.Companion.LOG_TAG
+import com.example.newsapp_02.R
 import com.example.newsapp_02.data.util.Resource
 import com.example.newsapp_02.databinding.FragmentNewsBinding
 import com.example.newsapp_02.presentation.adapter.NewsAdapter
